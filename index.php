@@ -1,13 +1,67 @@
 <?php
 include("simple_html_dom.php");
-if(isset($_POST['isiTextArea'])){
-    $html = file_get_html($_POST['isiTextArea']);
-    echo "<p class='ambilIni' hidden>".$html->find(".photo__item img", 0)->src."</p>";
+if(isset($_POST['textAreaLink'])){
+    $html = file_get_html($_POST['textAreaLink']);
     $gambar = $html->find(".photo__item img", 0)->src;
+    echo "<p class='linkGambar' hidden>".$html->find(".photo__item img", 0)->src."</p>";
     $judul = $html->find(".read h1", 0)->plaintext;
     $media = 'Bolasport.com';
+
+    $isiBerita = $html->find(".read__right", 0)->plaintext;
+    
+    $simpleCaption = preg_split('(\n)',$isiBerita)[0];
+    
+
+    // $abc = preg_split('(\n)',$isiBerita);
+
+    // $akhir = preg_split('(\n)',$isiBerita)[count(preg_split('(\n)',$isiBerita))-3];
+    // count(preg_split('(\n)',$isiBerita))-3
+
+    
+    $fullCaption='';
+    // for ($i=0;$i<(count(preg_split('(\n)', $isiBerita))-3);$i++) {
+    //         $fullCaption .= preg_split('(\n)',$isiBerita)[$i].PHP_EOL;
+    // }
+    
+    $isiBeritaSplit = preg_split('(\n)',$isiBerita);
+    // print_r($coba);
+    for ($i=0;$i<(count(preg_split('(\n)', $isiBerita))-3);$i++) {
+            // print_r(preg_split('(\n)', $isiBerita)[$i]);
+            // $n = $i;
+            if (isset(preg_grep ('/(?:^|\W)Baca Juga(?:$|\W)/', $isiBeritaSplit)[$i])) {
+                        // unset($coba[$i]);
+                        $isiBeritaSplit[$i]='';
+                        // echo $i.'--works-- ';
+            }
+            // $fullCaption .= preg_split('(\n)',$isiBerita)[$i].PHP_EOL;
+            $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
+    }
+
+    // print_r(preg_grep ('/(?:^|\W)Baca Juga(?:$|\W)/', $coba));
+    // echo '<br/>----------<br/>';
+    // print_r(preg_split('(\n)',$isiBerita));
+    // echo 'ga works';
+
+    // print_r($coba);
+    // print_r($fullCaption);
+
+    
+    // for($i = 0; $i<count($coba);$i++){
+	
+    //     if (preg_grep ('/^baca juga (\w+)/i', $coba)[$i]) {
+    //         unset($coba[$i]);
+    //         echo '--works--';
+    //     }
+    //    echo "asd-- ";
+    // }
+
+    // print_r($coba);
+        
+    echo "<div class='simpleCaption' hidden>".$simpleCaption."</div>";
+    echo "<div class='fullCaption' hidden>".$fullCaption."</div>";
 }
 ?>
+
 
 <html>
 <head>
@@ -54,19 +108,22 @@ if(isset($_POST['isiTextArea'])){
     </div>
     
     <!-- TOMBOL TOMBOL -------------------- -->
-    <div class="justify-content-center d-flex mb-5">
+    <div class="justify-content-center d-flex mb-5 mt-2">
     <div class="col-lg-5 col-11 ">
-        <p class="nilai">nilai</p>
-        <input type="range" min="0" max="31" class="form-range textRange pb-3" width="auto" >
-        <input type="range" min="0" max="10" class="form-range range pb-3" width="auto" >
+        <!-- <p class="nilai">nilai</p> -->
+        <label for="customRange1" class="form-label">Geser Text</label>
+        <input type="range" id="customRange1" min="0" max="32" class="form-range textRange pb-3" width="auto" >
+        <label for="customRange2" class="form-label">Geser Gambar</label>
+        <input type="range" id="customRange2" min="0" max="10" class="form-range range pb-3" width="auto" >
         <input type="file" class="file-input" accept="image/*" hidden>
         <div class="d-flex justify-content-between mt-4">
             <div>
-                <button class="btn btn-primary btn-sm choose-img">Choose Img</button>
-                <button class="btn btn-outline-primary btn-sm resetBtn">Reset Img</button>
+                <button class="btn btn-primary btn-sm choose-img">Choose</button>
+                <button class="btn btn-outline-primary btn-sm resetBtn">Reset</button>
+                <button class="btn btn-outline-primary btn-sm extBtn">Ext.</button>
             </div>
             <div>
-                <button class="btn btn-primary btn-sm downloadIniBtn">Download ini</button>
+                <button class="btn btn-primary btn-sm downloadIniBtn">Download</button>
             </div>
         </div>
     </div>
@@ -76,7 +133,7 @@ if(isset($_POST['isiTextArea'])){
     <div class="col-lg-5 col-12 ">
         <form action="" method="post">
         <div class="form-floating">
-        <textarea class="form-control" name="isiTextArea"></textarea>
+        <textarea class="form-control textAreaLink" name="textAreaLink"required></textarea>
         <label for="floatingTextarea">Link</label>
         <div class="d-flex justify-content-end mt-2">
             <input type="button" class="col-2 btn btn-sm btn-outline-primary clearBtn mx-1" value="clear">
@@ -85,6 +142,27 @@ if(isset($_POST['isiTextArea'])){
         </div>
         </div>
         </form>
+    </div>
+    </div>
+
+    <div class="justify-content-center d-flex mb-5">
+    <div class="col-lg-5 col-12 ">
+        <!-- <form action="" method="post"> -->
+        <div class="form-floating">
+        <textarea class="form-control textAreaCaption" style="height:230px"><?php echo isset($simpleCaption) ? $simpleCaption : ''; ?></textarea>
+        <label for="floatingTextarea">Caption</label>
+        <div class="d-flex justify-content-between mt-2">
+            <div>                
+                <button class=" btn btn-sm btn-outline-primary copyBtn " >Copy Caption</button>
+            </div>
+            <div>
+                <button class=" btn btn-sm btn-outline-primary simpleCaptionBtn" >Simple Caption</button>
+                <button class=" btn btn-sm btn-outline-primary fullCaptionBtn" >Full Caption</button>
+            </div>
+            <!-- <button class="col-4 btn btn-sm btn-primary linkBtn">Kirim</button> -->
+        </div>
+        </div>
+        <!-- </form> -->
     </div>
     </div>
 

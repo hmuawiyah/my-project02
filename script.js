@@ -4,11 +4,16 @@ const previewBg = document.querySelector(".preview-bg");
 
 const chooseImgBtn = document.querySelector(".choose-img");
 const resetBtn = document.querySelector(".resetBtn");
+const extBtn = document.querySelector(".extBtn");
 const downloadIniBtn = document.querySelector(".downloadIniBtn");
 
 const rangeBtn = document.querySelector(".range");
 const textRangeBtn = document.querySelector(".textRange");
 const clearBtn = document.querySelector(".clearBtn");
+
+const copyBtn = document.querySelector(".copyBtn");
+const simpleCaptionBtn = document.querySelector(".simpleCaptionBtn");
+const fullCaptionBtn = document.querySelector(".fullCaptionBtn");
 
 const loadImage = () => {
     let file = fileInput.files[0];
@@ -61,25 +66,43 @@ function textRange(){
 }
 
 function clearFn(){
-    document.querySelector("textarea").value = '';
+    document.querySelector(".textAreaLink").value = '';
 }
 
-// function loadFromLink(){
-//     const bodyNya = document.querySelector('body');
-//     const para = document.createElement('p');
-//     const isiNya = document.querySelector("textarea").value;
-//     para.innerHTML = isiNya;
-//     bodyNya.appendChild(para);
-// }
+function simpleCaptionFn(){
+    document.querySelector(".textAreaCaption").value = document.querySelector(".simpleCaption").innerText;
+}
+
+function fullCaptionFn(){
+    document.querySelector(".textAreaCaption").value = document.querySelector(".fullCaption").innerText;
+}
+
+function extFn(){
+    previewBg.style.backgroundImage = "url('" + document.querySelector(".linkGambar").innerText + "')"; 
+}
+
+function copyTextFn() {
+    var copyText = document.querySelector(".textAreaCaption");
+    copyText.select();
+    copyText.setSelectionRange(0, 99999); // For mobile devices
+    navigator.clipboard.writeText(copyText.value);
+    // console.log("works");
+    alert("Berhasil disalin!");
+  }
 
 
 fileInput.addEventListener("change", loadImage);
 chooseImgBtn.addEventListener("click", () => fileInput.click());
 resetBtn.addEventListener("click", resetSrc);
+extBtn.addEventListener("click", extFn);
 
 downloadIniBtn.addEventListener("click", downloadIni);
 rangeBtn.addEventListener("change", range);
 textRangeBtn.addEventListener("change", textRange);
 
 clearBtn.addEventListener("click", clearFn);
+copyBtn.addEventListener("click", copyTextFn);
+simpleCaptionBtn.addEventListener("click", simpleCaptionFn);
+
+fullCaptionBtn.addEventListener("click", fullCaptionFn);
 
