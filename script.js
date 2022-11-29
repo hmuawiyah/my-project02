@@ -90,7 +90,6 @@ function copyTextFn() {
     alert("Berhasil disalin!");
   }
 
-
 fileInput.addEventListener("change", loadImage);
 chooseImgBtn.addEventListener("click", () => fileInput.click());
 resetBtn.addEventListener("click", resetSrc);

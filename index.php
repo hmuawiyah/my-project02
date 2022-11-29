@@ -11,51 +11,16 @@ if(isset($_POST['textAreaLink'])){
     
     $simpleCaption = preg_split('(\n)',$isiBerita)[0];
     
-
-    // $abc = preg_split('(\n)',$isiBerita);
-
-    // $akhir = preg_split('(\n)',$isiBerita)[count(preg_split('(\n)',$isiBerita))-3];
-    // count(preg_split('(\n)',$isiBerita))-3
-
-    
     $fullCaption='';
-    // for ($i=0;$i<(count(preg_split('(\n)', $isiBerita))-3);$i++) {
-    //         $fullCaption .= preg_split('(\n)',$isiBerita)[$i].PHP_EOL;
-    // }
-    
     $isiBeritaSplit = preg_split('(\n)',$isiBerita);
-    // print_r($coba);
+
     for ($i=0;$i<(count(preg_split('(\n)', $isiBerita))-3);$i++) {
-            // print_r(preg_split('(\n)', $isiBerita)[$i]);
-            // $n = $i;
+
             if (isset(preg_grep ('/(?:^|\W)Baca Juga(?:$|\W)/', $isiBeritaSplit)[$i])) {
-                        // unset($coba[$i]);
                         $isiBeritaSplit[$i]='';
-                        // echo $i.'--works-- ';
             }
-            // $fullCaption .= preg_split('(\n)',$isiBerita)[$i].PHP_EOL;
             $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
     }
-
-    // print_r(preg_grep ('/(?:^|\W)Baca Juga(?:$|\W)/', $coba));
-    // echo '<br/>----------<br/>';
-    // print_r(preg_split('(\n)',$isiBerita));
-    // echo 'ga works';
-
-    // print_r($coba);
-    // print_r($fullCaption);
-
-    
-    // for($i = 0; $i<count($coba);$i++){
-	
-    //     if (preg_grep ('/^baca juga (\w+)/i', $coba)[$i]) {
-    //         unset($coba[$i]);
-    //         echo '--works--';
-    //     }
-    //    echo "asd-- ";
-    // }
-
-    // print_r($coba);
         
     echo "<div class='simpleCaption' hidden>".$simpleCaption."</div>";
     echo "<div class='fullCaption' hidden>".$fullCaption."</div>";
@@ -76,7 +41,7 @@ if(isset($_POST['textAreaLink'])){
 <div class="container ">
 <div class="row mt-5">
     <!-- GAMBAR YANG AKAN DICETAK -------------------- -->
-    <div class="justify-content-center d-flex col-12">
+    <div class="justify-content-center d-flex col-12 mb-3">
         <div class="preview-div" id="capture" style="width:375px; height: 500px">
             <div class='textGambar' style="transform: translate(0px, 0px);">
                 <h4 style="transform: translate(10px, 10px);
@@ -108,46 +73,54 @@ if(isset($_POST['textAreaLink'])){
     </div>
     
     <!-- TOMBOL TOMBOL -------------------- -->
-    <div class="justify-content-center d-flex mb-5 mt-2">
+    <div class="justify-content-center d-flex mb-3">
     <div class="col-lg-5 col-11 ">
-        <!-- <p class="nilai">nilai</p> -->
         <label for="customRange1" class="form-label">Geser Text</label>
         <input type="range" id="customRange1" min="0" max="32" class="form-range textRange pb-3" width="auto" >
         <label for="customRange2" class="form-label">Geser Gambar</label>
         <input type="range" id="customRange2" min="0" max="10" class="form-range range pb-3" width="auto" >
         <input type="file" class="file-input" accept="image/*" hidden>
-        <div class="d-flex justify-content-between mt-4">
-            <div>
-                <button class="btn btn-primary btn-sm choose-img">Choose</button>
-                <button class="btn btn-outline-primary btn-sm resetBtn">Reset</button>
-                <button class="btn btn-outline-primary btn-sm extBtn">Ext.</button>
+        <div class="card" width="100%">
+            <div class="card-body">
+            <h6 class="card-title">Image</h6>
+            <div class="d-flex justify-content-between mt-4">
+                <div>
+                    <button class="btn btn-primary btn-sm choose-img">Choose</button>
+                    <button class="btn btn-outline-primary btn-sm resetBtn">Reset</button>
+                    <button class="btn btn-outline-primary btn-sm extBtn">Ext.</button>
+                </div>
+                <div>
+                    <button class="btn btn-primary btn-sm downloadIniBtn">Download</button>
+                </div>
             </div>
-            <div>
-                <button class="btn btn-primary btn-sm downloadIniBtn">Download</button>
             </div>
         </div>
     </div>
     </div>
 
-    <div class="justify-content-center d-flex mb-5">
+    <div class="justify-content-center d-flex mb-3">
     <div class="col-lg-5 col-12 ">
         <form action="" method="post">
         <div class="form-floating">
         <textarea class="form-control textAreaLink" name="textAreaLink"required></textarea>
         <label for="floatingTextarea">Link</label>
-        <div class="d-flex justify-content-end mt-2">
-            <input type="button" class="col-2 btn btn-sm btn-outline-primary clearBtn mx-1" value="clear">
-            <button class="col-4 btn btn-sm btn-primary linkBtn" type="submit">Kirim</button>
-            <!-- <button class="col-4 btn btn-sm btn-primary testBtn">test</button> -->
+        <div class="d-flex justify-content-between mt-2">
+            <!-- Button trigger modal -->
+            <div>
+                <a class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >List of news list...</a>
+            </div>
+            <div>
+                <input type="button" class="btn btn-sm btn-outline-primary clearBtn mx-1" value="clear">
+                <button class="btn btn-sm btn-primary linkBtn" type="submit">Kirim</button>
+            </div>
         </div>
         </div>
         </form>
     </div>
     </div>
 
-    <div class="justify-content-center d-flex mb-5">
+    <div class="justify-content-center d-flex mb-3">
     <div class="col-lg-5 col-12 ">
-        <!-- <form action="" method="post"> -->
         <div class="form-floating">
         <textarea class="form-control textAreaCaption" style="height:230px"><?php echo isset($simpleCaption) ? $simpleCaption : ''; ?></textarea>
         <label for="floatingTextarea">Caption</label>
@@ -159,14 +132,39 @@ if(isset($_POST['textAreaLink'])){
                 <button class=" btn btn-sm btn-outline-primary simpleCaptionBtn" >Simple Caption</button>
                 <button class=" btn btn-sm btn-outline-primary fullCaptionBtn" >Full Caption</button>
             </div>
-            <!-- <button class="col-4 btn btn-sm btn-primary linkBtn">Kirim</button> -->
         </div>
         </div>
-        <!-- </form> -->
     </div>
     </div>
 
+    <div class="justify-content-center d-flex mb-5"></div>
+
 </div>
+</div>
+
+
+
+
+
+
+<!-- Modal --------------------->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">List of news link</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <a href="https://www.bolasport.com/bola" class="btn btn-outline-primary btn-sm" target="_blank">BolaSport</a>
+        <p class="mt-3" >Pilih  salin link lalu paste pada kolom link dan klik kirim</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+      </div>
+    </div>
+  </div>
 </div>
     
     <script src="script.js"></script>
