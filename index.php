@@ -2,28 +2,62 @@
 include("simple_html_dom.php");
 if(isset($_POST['textAreaLink'])){
     $html = file_get_html($_POST['textAreaLink']);
-    $gambar = $html->find(".photo__item img", 0)->src;
-    echo "<p class='linkGambar' hidden>".$html->find(".photo__item img", 0)->src."</p>";
-    $judul = $html->find(".read h1", 0)->plaintext;
-    $media = 'Bolasport.com';
-
-    $isiBerita = $html->find(".read__right", 0)->plaintext;
     
-    $simpleCaption = preg_split('(\n)',$isiBerita)[0];
-    
-    $fullCaption='';
-    $isiBeritaSplit = preg_split('(\n)',$isiBerita);
-
-    for ($i=0;$i<(count(preg_split('(\n)', $isiBerita))-3);$i++) {
-
-            if (isset(preg_grep ('/(?:^|\W)Baca Juga(?:$|\W)/', $isiBeritaSplit)[$i])) {
-                        $isiBeritaSplit[$i]='';
-            }
-            $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
-    }
+    if($_POST['textAreaLink']){
+        $array = explode('www', $_POST['textAreaLink']);
+        //---------------------- CODINGAN DARI LINK BOLASPORT ---------------------------------
+        if(preg_grep ('/(?:^|\W)bolasport(?:$|\W)/', $array)){
+            $media = 'Bolasport.com';
+            $judul = $html->find(".read h1", 0)->plaintext; // text judul utk di gambar
+            $gambar = $html->find(".photo__item img", 0)->src;
         
-    echo "<div class='simpleCaption' hidden>".$simpleCaption."</div>";
-    echo "<div class='fullCaption' hidden>".$fullCaption."</div>";
+            $isiBerita = $html->find(".read__right", 0)->plaintext; // variable utama utk diolah
+
+            $simpleCaption = preg_split('(\n)',$isiBerita)[0]; //utk simple caption di textarea
+            $fullCaption=''; //utk full caption di textarea
+            $isiBeritaSplit = preg_split('(\n)',$isiBerita);
+        
+            for ($i=0;$i<(count(preg_split('(\n)', $isiBerita))-3);$i++) {
+        
+                    if (isset(preg_grep ('/(?:^|\W)Baca Juga(?:$|\W)/', $isiBeritaSplit)[$i])) {
+                                $isiBeritaSplit[$i]='';
+                    }
+                    $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
+            }
+
+            echo "<p class='linkGambar' hidden>".$html->find(".photo__item img", 0)->src."</p>";
+            echo "<div class='simpleCaption' hidden>".$simpleCaption."</div>";
+            echo "<div class='fullCaption' hidden>".$fullCaption."</div>";
+        }
+        //---------------------- END CODINGAN DARI LINK BOLASPORT ---------------------------------
+        //---------------------- CODINGAN DARI LINK BOLA KOMPAS ---------------------------------
+        if(preg_grep ('/(?:^|\W)kompas(?:$|\W)/', $array)){
+            $media = 'bola.kompas.com';
+            $judul = $html->find(".read__title", 0)->plaintext; // text judul utk di gambar
+            $gambar = $html->find(".photo__wrap img", 0)->src;
+        
+            $isiBerita = $html->find(".read__content .clearfix", 0)->plaintext; // variable utama utk diolah
+
+            $simpleCaption = preg_split('(\n)',$isiBerita)[0]; //utk simple caption di textarea
+            $fullCaption=''; //utk full caption di textarea
+            $isiBeritaSplit = preg_split('(\n)',$isiBerita);
+        
+            for ($i=0;$i<(count(preg_split('(\n)', $isiBerita))-3);$i++) {
+        
+                    if (isset(preg_grep ('/(?:^|\W)Baca Juga(?:$|\W)/', $isiBeritaSplit)[$i])) {
+                                $isiBeritaSplit[$i]='';
+                    }else if (isset(preg_grep ('/(?:^|\W)Baca juga(?:$|\W)/', $isiBeritaSplit)[$i])) {
+                        $isiBeritaSplit[$i]='';
+                    }
+                    $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
+            }
+
+            echo "<p class='linkGambar' hidden>".$html->find(".photo__wrap img", 0)->src."</p>";
+            echo "<div class='simpleCaption' hidden>".$simpleCaption."</div>";
+            echo "<div class='fullCaption' hidden>".$fullCaption."</div>";
+        }
+        //---------------------- END CODINGAN DARI LINK BOLA KOMPAS ---------------------------------
+    }
 }
 ?>
 
@@ -157,11 +191,11 @@ if(isset($_POST['textAreaLink'])){
       </div>
       <div class="modal-body">
         <a href="https://www.bolasport.com/bola" class="btn btn-outline-primary btn-sm" target="_blank">BolaSport</a>
+        <a href="https://bola.kompas.com/" class="btn btn-outline-primary btn-sm" target="_blank">Bola Kompas</a>
         <p class="mt-3" >Pilih  salin link lalu paste pada kolom link dan klik kirim</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <!-- <button type="button" class="btn btn-primary">Understood</button> -->
       </div>
     </div>
   </div>

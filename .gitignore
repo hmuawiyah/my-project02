@@ -1,3 +1,4 @@
 _redirects
 index draft.php
-# .gitignore
+script draft.js
+.gitignore

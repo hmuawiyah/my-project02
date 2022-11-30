@@ -24,22 +24,8 @@ const resetSrc = () => {
     previewBg.style.backgroundImage = "url('sample.png')"; 
 }
 
-// function downloadIni() {
-//     html2canvas(document.querySelector(".preview-div")).then(canvas => {
-//         const base64image = canvas.toDataURL("image/png");
-//         var anchor = document.createElement('a');
-//         anchor.setAttribute('href', base64image);
-//         anchor.setAttribute('download', 'ini-gambar.png');
-//         anchor.click();
-//         anchor.remove();
-//     });
-// }
-
 function downloadIni() {
     html2canvas(document.querySelector("#capture"), {
-        // logging: true,
-        // letterRendering: 1,
-        // scale: 1,
         proxy: "https://hm-proxy.herokuapp.com/",
         allowTaint: false,
         useCORS: false
@@ -86,7 +72,6 @@ function copyTextFn() {
     copyText.select();
     copyText.setSelectionRange(0, 99999); // For mobile devices
     navigator.clipboard.writeText(copyText.value);
-    // console.log("works");
     alert("Berhasil disalin!");
   }
 

@@ -1,5 +1,5 @@
-ErrorDocument 404 /TK-HARAPAN/index.php
-ErrorDocument 403 /TK-HARAPAN/index.php
+ErrorDocument 404 /index.php
+ErrorDocument 403 /index.php
 
 #Default File
 DirectoryIndex index.php
