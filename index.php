@@ -192,7 +192,7 @@ if(isset($_POST['textAreaLink'])){
       <div class="modal-body">
         <a href="https://www.bolasport.com/bola" class="btn btn-outline-primary btn-sm" target="_blank">BolaSport</a>
         <a href="https://bola.kompas.com/" class="btn btn-outline-primary btn-sm" target="_blank">Bola Kompas</a>
-        <p class="mt-3" >Pilih  salin link lalu paste pada kolom link dan klik kirim</p>
+        <p class="mt-3" >Pilih portal berita, salin link lalu paste pada kolom link dan klik kirim</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
