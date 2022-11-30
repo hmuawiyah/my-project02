@@ -1,6 +1,7 @@
 const fileInput = document.querySelector(".file-input");
 const previewDiv = document.querySelector(".preview-div div");
 const previewBg = document.querySelector(".preview-bg");
+const coverBg = document.querySelector(".cover-bg");
 
 const chooseImgBtn = document.querySelector(".choose-img");
 const resetBtn = document.querySelector(".resetBtn");
@@ -8,6 +9,7 @@ const extBtn = document.querySelector(".extBtn");
 const downloadIniBtn = document.querySelector(".downloadIniBtn");
 
 const rangeBtn = document.querySelector(".range");
+const filterBrgnRangeBtn = document.querySelector(".filterBrgnRange");
 const textRangeBtn = document.querySelector(".textRange");
 const clearBtn = document.querySelector(".clearBtn");
 
@@ -40,10 +42,11 @@ function downloadIni() {
 };
 
 function range(){
-    // previewDiv.style.backgroundPositionX = `${((rangeBtn.value*10)-100)*-1}%`;
-    console.log("range bisa");
     previewBg.style.backgroundPositionX = `${(rangeBtn.value*10)}%`; 
-    document.querySelector(".nilai").innerText = `${(rangeBtn.value*10)}%`; 
+}
+
+function filterBrgnRangeFn(){
+    previewBg.style.filter = `brightness(${filterBrgnRangeBtn.value/100})`; 
 }
 
 function textRange(){
@@ -71,7 +74,7 @@ function copyTextFn() {
     var copyText = document.querySelector(".textAreaCaption");
     copyText.select();
     copyText.setSelectionRange(0, 99999); // For mobile devices
-    navigator.clipboard.writeText(copyText.value);
+    document.execCommand("copy");
     alert("Berhasil disalin!");
   }
 
@@ -81,6 +84,7 @@ resetBtn.addEventListener("click", resetSrc);
 extBtn.addEventListener("click", extFn);
 
 downloadIniBtn.addEventListener("click", downloadIni);
+filterBrgnRangeBtn.addEventListener("change", filterBrgnRangeFn);
 rangeBtn.addEventListener("change", range);
 textRangeBtn.addEventListener("change", textRange);
 

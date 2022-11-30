@@ -5,6 +5,7 @@ if(isset($_POST['textAreaLink'])){
     
     if($_POST['textAreaLink']){
         $array = explode('www', $_POST['textAreaLink']);
+
         //---------------------- CODINGAN DARI LINK BOLASPORT ---------------------------------
         if(preg_grep ('/(?:^|\W)bolasport(?:$|\W)/', $array)){
             $media = 'Bolasport.com';
@@ -19,15 +20,15 @@ if(isset($_POST['textAreaLink'])){
         
             for ($i=0;$i<(count(preg_split('(\n)', $isiBerita))-3);$i++) {
         
-                    if (isset(preg_grep ('/(?:^|\W)Baca Juga(?:$|\W)/', $isiBeritaSplit)[$i])) {
-                                $isiBeritaSplit[$i]='';
-                    }
-                    $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
+                if (isset(preg_grep ('/(?:^|\W)Baca Juga(?:$|\W)/', $isiBeritaSplit)[$i])) {
+                    $isiBeritaSplit[$i]='';
+                }else if (isset(preg_grep ('/(?:^|\W)Baca juga(?:$|\W)/', $isiBeritaSplit)[$i])) {
+                    $isiBeritaSplit[$i]='';
+                }
+                $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
             }
 
             echo "<p class='linkGambar' hidden>".$html->find(".photo__item img", 0)->src."</p>";
-            echo "<div class='simpleCaption' hidden>".$simpleCaption."</div>";
-            echo "<div class='fullCaption' hidden>".$fullCaption."</div>";
         }
         //---------------------- END CODINGAN DARI LINK BOLASPORT ---------------------------------
         //---------------------- CODINGAN DARI LINK BOLA KOMPAS ---------------------------------
@@ -52,11 +53,15 @@ if(isset($_POST['textAreaLink'])){
                     $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
             }
 
+            
             echo "<p class='linkGambar' hidden>".$html->find(".photo__wrap img", 0)->src."</p>";
-            echo "<div class='simpleCaption' hidden>".$simpleCaption."</div>";
-            echo "<div class='fullCaption' hidden>".$fullCaption."</div>";
         }
         //---------------------- END CODINGAN DARI LINK BOLA KOMPAS ---------------------------------
+
+        $hashtagnya = "\n\nsrc {$media}\n__\n#hashtag1 #hashtag2 #hashtag3";
+        echo "<div class='simpleCaption' hidden>".$simpleCaption.$hashtagnya."</div>";
+        echo "<div class='fullCaption' hidden>".$fullCaption.$hashtagnya."</div>";
+
     }
 }
 ?>
@@ -73,22 +78,21 @@ if(isset($_POST['textAreaLink'])){
 </head>
 
 <body>
+
 <div class="container ">
 <div class="row mt-5">
-    <!-- GAMBAR YANG AKAN DICETAK -------------------- -->
+    <!-- -------------------------- GAMBAR YANG AKAN DICETAK -------------------------- -->
     <div class="justify-content-center d-flex col-12 mb-3">
-        <div class="preview-div" id="capture" style="width:375px; height: 500px">
-            <div class='textGambar' style="transform: translate(0px, 0px);">
+        <div class="preview-div" id="capture" style="width:375px; height: 500px; overflow: hidden;">
+            <div class='textGambar' style="transform: translate(0px, 0px);position: absolute;z-index: 5;">
                 <h4 style="transform: translate(10px, 10px);
                         background-color: #ffffff;
-                        z-index: 2;
                         padding: 15px;
                         text-transform: uppercase;
                         position: absolute;">folkative 
                 </h4>
                 <h6 style="transform: translate(10px, 50px);
                         background-color: #ffffff;
-                        z-index: 2;
                         font-weight: 400;
                         width : 275px;
                         padding: 15px;
@@ -106,10 +110,12 @@ if(isset($_POST['textAreaLink'])){
             </div>
         </div>
     </div>
-    
-    <!-- TOMBOL TOMBOL -------------------- -->
+
+    <!-- -------------------------- TOMBOL TOMBOL -------------------------- -->
     <div class="justify-content-center d-flex mb-3">
     <div class="col-lg-5 col-11 ">
+        <label for="customRange1" class="form-label">Brightness</label>
+        <input type="range" id="customRange1" min="85" max="115" value="100" class="form-range filterBrgnRange pb-3" width="auto" >
         <label for="customRange1" class="form-label">Geser Text</label>
         <input type="range" id="customRange1" min="0" max="32" class="form-range textRange pb-3" width="auto" >
         <label for="customRange2" class="form-label">Geser Gambar</label>
@@ -125,7 +131,7 @@ if(isset($_POST['textAreaLink'])){
                     <button class="btn btn-outline-primary btn-sm extBtn">Ext.</button>
                 </div>
                 <div>
-                    <button class="btn btn-primary btn-sm downloadIniBtn">Download</button>
+                    <button class="btn btn-primary btn-sm downloadIniBtn">Download <i class="fa-sharp fa-solid fa-download"></i></button>
                 </div>
             </div>
             </div>
@@ -145,8 +151,8 @@ if(isset($_POST['textAreaLink'])){
                 <a class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >List of news list...</a>
             </div>
             <div>
-                <input type="button" class="btn btn-sm btn-outline-primary clearBtn mx-1" value="clear">
-                <button class="btn btn-sm btn-primary linkBtn" type="submit">Kirim</button>
+                <input type="button" class="btn btn-sm btn-outline-primary clearBtn mx-1" value="Clear">
+                <button class="btn btn-sm btn-primary linkBtn px-4" type="submit">Proses</button>
             </div>
         </div>
         </div>
@@ -157,7 +163,7 @@ if(isset($_POST['textAreaLink'])){
     <div class="justify-content-center d-flex mb-3">
     <div class="col-lg-5 col-12 ">
         <div class="form-floating">
-        <textarea class="form-control textAreaCaption" style="height:230px"><?php echo isset($simpleCaption) ? $simpleCaption : ''; ?></textarea>
+        <textarea class="form-control textAreaCaption" style="height:230px"><?php echo isset($simpleCaption) ? $simpleCaption.$hashtagnya : ''; ?></textarea>
         <label for="floatingTextarea">Caption</label>
         <div class="d-flex justify-content-between mt-2">
             <div>                
@@ -171,17 +177,12 @@ if(isset($_POST['textAreaLink'])){
         </div>
     </div>
     </div>
-
-    <div class="justify-content-center d-flex mb-5"></div>
+    <div style="margin-bottom: 300px;"></div>
 
 </div>
 </div>
 
-
-
-
-
-
+    <!-- -------------------------- UNSEEN CODE -------------------------- -->    
 <!-- Modal --------------------->
 <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
@@ -193,7 +194,7 @@ if(isset($_POST['textAreaLink'])){
       <div class="modal-body">
         <a href="https://www.bolasport.com/bola" class="btn btn-outline-primary btn-sm mb-2" target="_blank">BolaSport <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i></a><br/>
         <a href="https://bola.kompas.com/" class="btn btn-outline-primary btn-sm mb-2" target="_blank">Bola Kompas <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i></a><br/>
-        <p class="mt-3" >Pilih portal berita, salin link lalu paste pada kolom link dan klik kirim</p>
+        <p class="mt-3 small" >Pilih portal berita, salin link beritanya lalu paste pada kolom link dan klik proses</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -201,7 +202,8 @@ if(isset($_POST['textAreaLink'])){
     </div>
   </div>
 </div>
-    
+
+
     <script src="script.js"></script>
 </body>
 </html>
