@@ -2,11 +2,17 @@ const fileInput = document.querySelector(".file-input");
 const previewDiv = document.querySelector(".preview-div div");
 const previewBg = document.querySelector(".preview-bg");
 const coverBg = document.querySelector(".cover-bg");
+const textAreaEditJudul = document.querySelector(".textAreaEditJudul");
+const textAreaCaption = document.querySelector(".textAreaCaption");
 
 const chooseImgBtn = document.querySelector(".choose-img");
 const resetBtn = document.querySelector(".resetBtn");
 const extBtn = document.querySelector(".extBtn");
 const downloadIniBtn = document.querySelector(".downloadIniBtn");
+
+const squareBtn = document.querySelector(".squareBtn");
+const feedBtn = document.querySelector(".feedBtn");
+const storyBtn = document.querySelector(".storyBtn");
 
 const rangeBtn = document.querySelector(".range");
 const filterBrgnRangeBtn = document.querySelector(".filterBrgnRange");
@@ -51,19 +57,7 @@ function filterBrgnRangeFn(){
 
 function textRange(){
     previewDiv.style.backgroundPositionX = `${(rangeBtn.value*10)}%`; 
-    document.querySelector(".textGambar").style.transform = `translate(0px, ${(textRangeBtn.value*10)}px)`; 
-}
-
-function clearFn(){
-    document.querySelector(".textAreaLink").value = '';
-}
-
-function simpleCaptionFn(){
-    document.querySelector(".textAreaCaption").value = document.querySelector(".simpleCaption").innerText;
-}
-
-function fullCaptionFn(){
-    document.querySelector(".textAreaCaption").value = document.querySelector(".fullCaption").innerText;
+    document.querySelector(".textGambar").style.transform = `translate(0px, ${(textRangeBtn.value*15)}px)`; 
 }
 
 function extFn(){
@@ -71,26 +65,35 @@ function extFn(){
 }
 
 function copyTextFn() {
-    var copyText = document.querySelector(".textAreaCaption");
+    var copyText = textAreaCaption;
     copyText.select();
     copyText.setSelectionRange(0, 99999); // For mobile devices
     document.execCommand("copy");
     alert("Berhasil disalin!");
-  }
+}
+
+function textAreaEditJudulFn(){
+    document.querySelector(".textJudul").innerText = textAreaEditJudul.value;
+}
 
 fileInput.addEventListener("change", loadImage);
 chooseImgBtn.addEventListener("click", () => fileInput.click());
 resetBtn.addEventListener("click", resetSrc);
 extBtn.addEventListener("click", extFn);
+textAreaEditJudul.addEventListener("keyup", textAreaEditJudulFn);
 
 downloadIniBtn.addEventListener("click", downloadIni);
 filterBrgnRangeBtn.addEventListener("change", filterBrgnRangeFn);
 rangeBtn.addEventListener("change", range);
 textRangeBtn.addEventListener("change", textRange);
 
-clearBtn.addEventListener("click", clearFn);
-copyBtn.addEventListener("click", copyTextFn);
-simpleCaptionBtn.addEventListener("click", simpleCaptionFn);
+squareBtn.addEventListener("click", () => document.querySelector("#capture").style.height = "375px");
+feedBtn.addEventListener("click", () => document.querySelector("#capture").style.height = "500px");
+storyBtn.addEventListener("click", () => document.querySelector("#capture").style.height = "666px");
 
-fullCaptionBtn.addEventListener("click", fullCaptionFn);
+clearBtn.addEventListener("click", () => document.querySelector(".textAreaLink").value = '');
+copyBtn.addEventListener("click", copyTextFn);
+
+simpleCaptionBtn.addEventListener("click", () => textAreaCaption.value = document.querySelector(".simpleCaption").innerText);
+fullCaptionBtn.addEventListener("click", () => textAreaCaption.value = document.querySelector(".fullCaption").innerText);
 

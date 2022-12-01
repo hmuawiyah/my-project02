@@ -27,7 +27,6 @@ if(isset($_POST['textAreaLink'])){
                 }
                 $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
             }
-
             echo "<p class='linkGambar' hidden>".$html->find(".photo__item img", 0)->src."</p>";
         }
         //---------------------- END CODINGAN DARI LINK BOLASPORT ---------------------------------
@@ -51,21 +50,16 @@ if(isset($_POST['textAreaLink'])){
                         $isiBeritaSplit[$i]='';
                     }
                     $fullCaption .= $isiBeritaSplit[$i].PHP_EOL;
-            }
-
-            
+            }   
             echo "<p class='linkGambar' hidden>".$html->find(".photo__wrap img", 0)->src."</p>";
         }
         //---------------------- END CODINGAN DARI LINK BOLA KOMPAS ---------------------------------
-
         $hashtagnya = "\n\nsrc {$media}\n__\n#hashtag1 #hashtag2 #hashtag3";
         echo "<div class='simpleCaption' hidden>".$simpleCaption.$hashtagnya."</div>";
         echo "<div class='fullCaption' hidden>".$fullCaption.$hashtagnya."</div>";
-
     }
 }
 ?>
-
 
 <html>
 <head>
@@ -79,9 +73,10 @@ if(isset($_POST['textAreaLink'])){
 
 <body>
 
-<div class="container ">
-<div class="row mt-5">
+<div class="container">
+<div class="row mt-5 justify-content-center">
     <!-- -------------------------- GAMBAR YANG AKAN DICETAK -------------------------- -->
+    <div class="col-lg-5">
     <div class="justify-content-center d-flex col-12 mb-3">
         <div class="preview-div" id="capture" style="width:375px; height: 500px; overflow: hidden;">
             <div class='textGambar' style="transform: translate(0px, 0px);position: absolute;z-index: 5;">
@@ -91,7 +86,7 @@ if(isset($_POST['textAreaLink'])){
                         text-transform: uppercase;
                         position: absolute;">folkative 
                 </h4>
-                <h6 style="transform: translate(10px, 50px);
+                <h6 class="textJudul" style="transform: translate(10px, 50px);
                         background-color: #ffffff;
                         font-weight: 400;
                         width : 275px;
@@ -110,10 +105,12 @@ if(isset($_POST['textAreaLink'])){
             </div>
         </div>
     </div>
+    </div>
 
     <!-- -------------------------- TOMBOL TOMBOL -------------------------- -->
+    <div class="col-lg-5">
     <div class="justify-content-center d-flex mb-3">
-    <div class="col-lg-5 col-11 ">
+        <div class="col-lg-11 col-11 ">
         <label for="customRange1" class="form-label">Brightness</label>
         <input type="range" id="customRange1" min="85" max="115" value="100" class="form-range filterBrgnRange pb-3" width="auto" >
         <label for="customRange1" class="form-label">Geser Text</label>
@@ -134,13 +131,26 @@ if(isset($_POST['textAreaLink'])){
                     <button class="btn btn-primary btn-sm downloadIniBtn">Download <i class="fa-sharp fa-solid fa-download"></i></button>
                 </div>
             </div>
+            <div class="d-flex justify-content-start mt-4">
+            <div class="btn-group" role="group" aria-label="Basic outlined example">
+                <button type="button" class="btn btn-sm btn-outline-primary squareBtn">Square 1:1</button>
+                <button type="button" class="btn btn-sm btn-outline-primary feedBtn">Feed 3:4</button>
+                <button type="button" class="btn btn-sm btn-outline-primary storyBtn">Story 9:16</button>
+            </div>
+            </div>
+            <hr/>
+            <!-- <h6 class="card-title">Edit Judul</h6> -->
+            <div class="form-floating">
+            <textarea class="form-control textAreaEditJudul" style="height:100px" name="textAreaLink"required><?php echo isset($judul) ? $judul : ''; ?></textarea>
+            <label for="floatingTextarea">Edit Judul - AutoChange on <i class="fa-sharp fa-solid fa-arrows-rotate"></i></label>
+            </div>
             </div>
         </div>
-    </div>
+        </div>
     </div>
 
     <div class="justify-content-center d-flex mb-3">
-    <div class="col-lg-5 col-12 ">
+        <div class="col-lg-11 col-12 ">
         <form action="" method="post">
         <div class="form-floating">
         <textarea class="form-control textAreaLink" name="textAreaLink"required></textarea>
@@ -148,36 +158,37 @@ if(isset($_POST['textAreaLink'])){
         <div class="d-flex justify-content-between mt-2">
             <!-- Button trigger modal -->
             <div>
-                <a class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >List of news list...</a>
+                <a class="" data-bs-toggle="modal" data-bs-target="#staticBackdrop" >See links...</a>
             </div>
             <div>
                 <input type="button" class="btn btn-sm btn-outline-primary clearBtn mx-1" value="Clear">
-                <button class="btn btn-sm btn-primary linkBtn px-4" type="submit">Proses</button>
+                <button class="btn btn-sm btn-primary linkBtn px-3" type="submit">Proses</button>
             </div>
         </div>
         </div>
         </form>
-    </div>
+        </div>
     </div>
 
     <div class="justify-content-center d-flex mb-3">
-    <div class="col-lg-5 col-12 ">
+        <div class="col-lg-11 col-12 ">
         <div class="form-floating">
         <textarea class="form-control textAreaCaption" style="height:230px"><?php echo isset($simpleCaption) ? $simpleCaption.$hashtagnya : ''; ?></textarea>
         <label for="floatingTextarea">Caption</label>
         <div class="d-flex justify-content-between mt-2">
             <div>                
-                <button class=" btn btn-sm btn-outline-primary copyBtn " >Copy Caption <i class="fa-sharp fa-solid fa-copy"></i></button>
+                <button class=" btn btn-sm btn-outline-primary copyBtn " >Copy <i class="fa-sharp fa-solid fa-copy"></i></button>
             </div>
             <div>
-                <button class=" btn btn-sm btn-outline-primary simpleCaptionBtn" >Simple Caption</button>
-                <button class=" btn btn-sm btn-outline-primary fullCaptionBtn" >Full Caption</button>
+                <button class=" btn btn-sm btn-outline-primary simpleCaptionBtn" >Simple Cap</button>
+                <button class=" btn btn-sm btn-outline-primary fullCaptionBtn px-3" >Full Cap</button>
             </div>
         </div>
         </div>
-    </div>
+        </div>
     </div>
     <div style="margin-bottom: 300px;"></div>
+    </div>
 
 </div>
 </div>
@@ -188,7 +199,7 @@ if(isset($_POST['textAreaLink'])){
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="staticBackdropLabel">List of news link</h1>
+        <h1 class="modal-title fs-5 text-uppercase" id="staticBackdropLabel">List of news link</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
