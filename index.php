@@ -111,21 +111,28 @@ if(isset($_POST['textAreaLink'])){
     <div class="col-lg-5">
     <div class="justify-content-center d-flex mb-3">
         <div class="col-lg-11 col-11 ">
-        <label for="customRange1" class="form-label">Brightness</label>
-        <input type="range" id="customRange1" min="85" max="115" value="100" class="form-range filterBrgnRange pb-3" width="auto" >
-        <label for="customRange1" class="form-label">Geser Text</label>
-        <input type="range" id="customRange1" min="0" max="32" class="form-range textRange pb-3" width="auto" >
-        <label for="customRange2" class="form-label">Geser Gambar</label>
-        <input type="range" id="customRange2" min="0" max="10" class="form-range range pb-3" width="auto" >
-        <input type="file" class="file-input" accept="image/*" hidden>
+        <!-- <div class="col-5 d-flex"> -->
+        <!-- <div class="justify-content-center"> -->
+            <label for="customRange1" class="form-label">Brightness</label>
+            <input type="range" id="customRange1" min="85" max="115" value="100" class="form-range filterBrgnRange pb-3" width="auto" >
+            <label for="customRange1" class="form-label">Geser Text</label>
+            <input type="range" id="customRange1" min="0" max="32" value="0" class="form-range textRange pb-3" width="auto" >
+            <label for="customRange2" class="form-label">Geser Gambar</label>
+            <input type="range" id="customRange2" min="0" max="10" value="5" class="form-range range pb-3" width="auto" >
+            <input type="file" class="file-input" accept="image/*" hidden>
+        </div>
+    </div>
+    <div class="justify-content-center d-flex mb-3">
+        <div class="col-lg-11 col-12 ">
         <div class="card" width="100%">
             <div class="card-body">
             <h6 class="card-title">Image</h6>
             <div class="d-flex justify-content-between mt-4">
                 <div>
-                    <button class="btn btn-primary btn-sm choose-img">Choose</button>
-                    <button class="btn btn-outline-primary btn-sm resetBtn">Reset</button>
-                    <button class="btn btn-outline-primary btn-sm extBtn">Ext.</button>
+                    <button class="btn btn-primary btn-sm choose-img">Img <i class="fa-sharp fa-solid fa-upload"></i></button>
+                    <!-- <button class="btn btn-outline-primary btn-sm resetBtn">Reset</button> -->
+                    <a class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#staticBackdrop2" >Img <i class="fa-sharp fa-solid fa-link"></i></a>
+                    <button class="btn btn-outline-primary btn-sm defBtn">Default</button>
                 </div>
                 <div>
                     <button class="btn btn-primary btn-sm downloadIniBtn">Download <i class="fa-sharp fa-solid fa-download"></i></button>
@@ -162,7 +169,10 @@ if(isset($_POST['textAreaLink'])){
             </div>
             <div>
                 <input type="button" class="btn btn-sm btn-outline-primary clearBtn mx-1" value="Clear">
-                <button class="btn btn-sm btn-primary linkBtn px-3" type="submit">Proses</button>
+                <div class="btn-group" role="group" aria-label="Basic example">
+                    <button class="btn btn-sm btn-outline-secondary px-3 pasteBtn2" type="button"><i class="fa-sharp fa-solid fa-paste"></i></button>
+                    <button class="btn btn-sm btn-primary px-3 linkBtn" type="submit">Proses</button>
+                </div>
             </div>
         </div>
         </div>
@@ -205,7 +215,7 @@ if(isset($_POST['textAreaLink'])){
       <div class="modal-body">
         <a href="https://www.bolasport.com/bola" class="btn btn-outline-primary btn-sm mb-2" target="_blank">BolaSport <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i></a><br/>
         <a href="https://bola.kompas.com/" class="btn btn-outline-primary btn-sm mb-2" target="_blank">Bola Kompas <i class="fa-sharp fa-solid fa-arrow-up-right-from-square"></i></a><br/>
-        <p class="mt-3 small" >Pilih portal berita, salin link beritanya lalu paste pada kolom link dan klik proses</p>
+        <p class="mt-3 small" >*Pilih portal berita, salin link beritanya lalu paste pada kolom link dan klik proses</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -214,6 +224,25 @@ if(isset($_POST['textAreaLink'])){
   </div>
 </div>
 
+<div class="modal fade" id="staticBackdrop2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel2" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5 text-uppercase" id="staticBackdropLabel">Image Link</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <div class="input-group mb-3">
+                <input type="text" class="form-control inputLink" placeholder="paste link gambar disini..." aria-label="Recipient's username" aria-describedby="button-addon2">
+                <button class="btn btn-outline-secondary btn-sm px-3 pasteBtn" type="button" id="button-addon2"><i class="fa-sharp fa-solid fa-paste"></i></button>
+                <button class="btn btn-outline-primary btn-sm imgLinkBtn" type="button" id="button-addon2">Proses</button>
+                <p class="mt-3 small" >*Pilih gambar di google, salin linknya lalu paste dan klik proses<br/>
+                *tidak semua gambar bisa dicetak</p>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
 
     <script src="script.js"></script>
 </body>

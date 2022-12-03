@@ -6,8 +6,8 @@ const textAreaEditJudul = document.querySelector(".textAreaEditJudul");
 const textAreaCaption = document.querySelector(".textAreaCaption");
 
 const chooseImgBtn = document.querySelector(".choose-img");
-const resetBtn = document.querySelector(".resetBtn");
-const extBtn = document.querySelector(".extBtn");
+const defBtn = document.querySelector(".defBtn");
+const imgLinkBtn = document.querySelector(".imgLinkBtn");
 const downloadIniBtn = document.querySelector(".downloadIniBtn");
 
 const squareBtn = document.querySelector(".squareBtn");
@@ -20,6 +20,8 @@ const textRangeBtn = document.querySelector(".textRange");
 const clearBtn = document.querySelector(".clearBtn");
 
 const copyBtn = document.querySelector(".copyBtn");
+const pasteBtn = document.querySelector(".pasteBtn");
+const pasteBtn2 = document.querySelector(".pasteBtn2");
 const simpleCaptionBtn = document.querySelector(".simpleCaptionBtn");
 const fullCaptionBtn = document.querySelector(".fullCaptionBtn");
 
@@ -28,13 +30,9 @@ const loadImage = () => {
     previewBg.style.backgroundImage = "url('" + URL.createObjectURL(file) + "')"; 
 }
 
-const resetSrc = () => {
-    previewBg.style.backgroundImage = "url('sample.png')"; 
-}
-
 function downloadIni() {
     html2canvas(document.querySelector("#capture"), {
-        proxy: "https://hm-proxy.herokuapp.com/",
+        proxy: "https://my-project02-proxy-server.vercel.app/",
         allowTaint: false,
         useCORS: false
     }).then(canvas => {
@@ -60,7 +58,7 @@ function textRange(){
     document.querySelector(".textGambar").style.transform = `translate(0px, ${(textRangeBtn.value*15)}px)`; 
 }
 
-function extFn(){
+function defFn(){
     previewBg.style.backgroundImage = "url('" + document.querySelector(".linkGambar").innerText + "')"; 
 }
 
@@ -78,8 +76,7 @@ function textAreaEditJudulFn(){
 
 fileInput.addEventListener("change", loadImage);
 chooseImgBtn.addEventListener("click", () => fileInput.click());
-resetBtn.addEventListener("click", resetSrc);
-extBtn.addEventListener("click", extFn);
+defBtn.addEventListener("click", defFn);
 textAreaEditJudul.addEventListener("keyup", textAreaEditJudulFn);
 
 downloadIniBtn.addEventListener("click", downloadIni);
@@ -93,7 +90,16 @@ storyBtn.addEventListener("click", () => document.querySelector("#capture").styl
 
 clearBtn.addEventListener("click", () => document.querySelector(".textAreaLink").value = '');
 copyBtn.addEventListener("click", copyTextFn);
+pasteBtn.addEventListener("click", async ()=>{
+    const inipaste= await navigator.clipboard.readText()
+    document.querySelector(".inputLink").value = inipaste;
+});
 
+pasteBtn2.addEventListener("click", async ()=>{
+    const inipaste= await navigator.clipboard.readText()
+    document.querySelector(".textAreaLink").value = inipaste;
+});
+imgLinkBtn.addEventListener("click", ()=>previewBg.style.backgroundImage = "url('" + document.querySelector(".inputLink").value + "')");
 simpleCaptionBtn.addEventListener("click", () => textAreaCaption.value = document.querySelector(".simpleCaption").innerText);
 fullCaptionBtn.addEventListener("click", () => textAreaCaption.value = document.querySelector(".fullCaption").innerText);
 
